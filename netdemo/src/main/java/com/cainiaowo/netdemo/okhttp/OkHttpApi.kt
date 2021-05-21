@@ -139,4 +139,57 @@ class OkHttpApi private constructor() : IHttpApi {
             callMap.get(callMap.keyAt(i))?.cancel()
         }
     }
+
+
+    /**
+     * 使用协程形式的get请求，使用runblocking，也可以使用suspend修饰
+     */
+    fun get(params: Map<String, Any>, urlStr: String) = runBlocking {
+        val urlBuilder = urlStr.toHttpUrl().newBuilder()
+        params.forEach { entry ->
+            urlBuilder.addEncodedQueryParameter(entry.key, entry.value.toString())
+        }
+
+        val request = Request.Builder()
+            .get()
+            .tag(params)
+            .url(urlBuilder.build())
+            .cacheControl(CacheControl.FORCE_NETWORK)
+            .build()
+        val newCall = mClient.newCall(request)
+
+        //存储请求，用户取消
+        callMap.put(request.tag(), newCall)
+        newCall.call()
+    }
+
+    /**
+     * 自定义扩展函数，扩展okhttp的call的异步执行方式，结合协程，返回dataresult的数据响应
+     */
+    private suspend fun Call.call(async: Boolean = true): Response {
+        return suspendCancellableCoroutine { continuation ->
+            if (async) {
+                enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        //避免不必要的冗余调用
+                        if (continuation.isCancelled) return
+                        continuation.resumeWithException(e)
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        continuation.resume(response)
+                    }
+                })
+            } else {
+                continuation.resume(execute())
+            }
+            continuation.invokeOnCancellation {
+                try {
+                    cancel()
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
+                }
+            }
+        }
+    }
 }
