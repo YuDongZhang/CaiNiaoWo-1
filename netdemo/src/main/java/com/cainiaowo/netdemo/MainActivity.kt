@@ -2,6 +2,7 @@ package com.cainiaowo.netdemo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.widget.TextView
 import com.blankj.utilcode.util.LogUtils
 
@@ -27,7 +28,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
         // post请求
-        httpApi.post(LoginReq(), "", object : IHttpCallback {
+        val loginBody = LoginReq()
+        httpApi.post(loginBody, "", object : IHttpCallback {
             override fun onSuccess(data: Any?) {
                 LogUtils.d("success result : ${data.toString()}")
                 runOnUiThread {
@@ -39,7 +41,9 @@ class MainActivity : AppCompatActivity() {
                 LogUtils.d("failed msg : ${error.toString()}")
             }
         })
-
+        // 取消post请求
+        SystemClock.sleep(200)
+        httpApi.cancelRequest(loginBody)
     }
 
     data class LoginReq(val mobi: String = "13067732886", val password: String = "66666666")

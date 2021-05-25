@@ -23,4 +23,14 @@ interface IHttpApi {
      * 抽象的Http的post请求封装,同步请求
      */
     fun syncPost(body: Any, path: String): Any? = null
+
+    /**
+     * 取消请求
+     */
+    fun cancelRequest(tag: Any)
+
+    /**
+     * 取消所有请求
+     */
+    fun cancelAllRequest()
 }

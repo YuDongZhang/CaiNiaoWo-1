@@ -1,5 +1,6 @@
 package com.cainiaowo.netdemo
 
+import androidx.collection.SimpleArrayMap
 import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -19,6 +20,16 @@ class OkHttpApi : IHttpApi {
 
     private var baseUrl = "http://api.qingyunke.com/"
 
+    /**
+     * 最大重试次数
+     */
+    var maxRetry = 0
+
+    /**
+     * 存储请求,控制请求可取消
+     */
+    private val callMap = SimpleArrayMap<Any, Call>()
+
     // OkHttpClient
     private val mClient = OkHttpClient.Builder()
         .callTimeout(10, TimeUnit.SECONDS)       // 完整请求超时时长,从发起到接收返回数据,默认值0,不限定
@@ -29,6 +40,11 @@ class OkHttpApi : IHttpApi {
         .followRedirects(false)     // 重定向
         .cache(Cache(File("sdcard/cache", "okhttp"), 1024L))    // 网络请求的缓存数据
 //        .cookieJar(CookieJar.NO_COOKIES)      // 实现 接口CookieJar的实现类,以此来设置cookie相关的信息,NO_COOKIES只适合无COOKIE使用
+        .cookieJar(LocalCookieJar())
+        .addNetworkInterceptor(KtHttpLogInterceptor {
+            logLevel(KtHttpLogInterceptor.LogLevel.BODY)
+        })
+        .addNetworkInterceptor(RetryInterceptor(maxRetry))
         .build()
 
     override fun get(params: Map<String, Any>, path: String, callback: IHttpCallback) {
@@ -39,10 +55,14 @@ class OkHttpApi : IHttpApi {
         }
         val request = Request.Builder()
             .get()
+            .tag(params)
             .url(urlBuilder.build())
             .cacheControl(CacheControl.FORCE_NETWORK) // 强制使用网络更新
             .build()
-        mClient.newCall(request).enqueue(object : Callback {
+        val newCall = mClient.newCall(request)
+        // 存储请求,用于取消
+        callMap.put(request.tag(), newCall)
+        newCall.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onFailed(e.message)
             }
@@ -57,9 +77,13 @@ class OkHttpApi : IHttpApi {
         val url = "$baseUrl$path"
         val request = Request.Builder()
             .post(Gson().toJson(body).toRequestBody())
+            .tag(body)
             .url("https://testapi.cniao5.com/accounts/login")
             .build()
-        mClient.newCall(request).enqueue(object : Callback {
+        val newCall = mClient.newCall(request)
+        // 存储请求,用于取消
+        callMap.put(request.tag(), newCall)
+        newCall.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onFailed(e.message)
             }
@@ -68,5 +92,21 @@ class OkHttpApi : IHttpApi {
                 callback.onSuccess(response.body?.string())
             }
         })
+    }
+
+    /**
+     * 取消网络请求,tag就是每次请求的id标记,也就是请求的传参
+     */
+    override fun cancelRequest(tag: Any) {
+        callMap[tag]?.cancel()
+    }
+
+    /**
+     * 取消所有网络请求
+     */
+    override fun cancelAllRequest() {
+        for (i in 0 until callMap.size()) {
+            callMap.get(callMap.keyAt(i))?.cancel()
+        }
     }
 }
