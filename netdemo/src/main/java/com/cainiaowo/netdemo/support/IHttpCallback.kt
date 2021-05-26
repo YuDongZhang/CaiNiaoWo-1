@@ -1,4 +1,4 @@
-package com.cainiaowo.netdemo
+package com.cainiaowo.netdemo.support
 
 /**
  * 网络请求的接口回调

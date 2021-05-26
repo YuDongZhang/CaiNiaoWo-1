@@ -1,5 +1,7 @@
 package com.cainiaowo.netdemo
 
+import com.cainiaowo.netdemo.support.IHttpCallback
+
 /**
  * 网络请求统一接口
  */

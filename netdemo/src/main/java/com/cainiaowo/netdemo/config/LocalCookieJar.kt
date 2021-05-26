@@ -1,4 +1,4 @@
-package com.cainiaowo.netdemo
+package com.cainiaowo.netdemo.config
 
 import okhttp3.Cookie
 import okhttp3.CookieJar

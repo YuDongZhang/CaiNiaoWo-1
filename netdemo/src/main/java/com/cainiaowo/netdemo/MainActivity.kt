@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.widget.TextView
 import com.blankj.utilcode.util.LogUtils
+import com.cainiaowo.netdemo.support.IHttpCallback
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
