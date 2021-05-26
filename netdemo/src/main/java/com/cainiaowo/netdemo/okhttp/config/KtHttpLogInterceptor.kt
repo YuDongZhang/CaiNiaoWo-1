@@ -1,7 +1,9 @@
-package com.cainiaowo.netdemo.config
+package com.cainiaowo.netdemo.okhttp.config
 
 import android.util.Log
+import com.cainiaowo.netdemo.okhttp.support.CaiNiaoUtils
 import okhttp3.*
+import okio.Buffer
 import java.net.URLDecoder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -100,7 +102,11 @@ class KtHttpLogInterceptor(block: (KtHttpLogInterceptor.() -> Unit)? = null) : I
     // region requestLog
     private fun logBodyReq(sb: StringBuffer, request: Request, connection: Connection?) {
         logHeadersReq(sb, request, connection)
-        sb.append("RequestBody:${request.body.toString()}")
+        // 读取RequestBody的内容
+        val req = request.newBuilder().build()
+        val sink = Buffer()
+        req.body?.writeTo(sink)
+        sb.append("RequestBody:${sink.readUtf8()}")
     }
 
     private fun logHeadersReq(sb: StringBuffer, request: Request, connection: Connection?) {
@@ -152,7 +158,7 @@ class KtHttpLogInterceptor(block: (KtHttpLogInterceptor.() -> Unit)? = null) : I
             // peek类似于clone数据流,不能直接用原来的body的string流数据作为日志,因为会消费掉IO,
             // 所以使用peek
             val peekBody = response.peekBody(1024 * 1024)
-            sb.append("ResponseBody:${peekBody.string()}\n")
+            sb.append("ResponseBody:${CaiNiaoUtils.unicodeDecode(peekBody.string())}\n")
         }.getOrNull()
     }
 

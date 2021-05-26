@@ -1,13 +1,15 @@
-package com.cainiaowo.netdemo
+package com.cainiaowo.netdemo.okhttp
 
 import androidx.collection.SimpleArrayMap
-import com.cainiaowo.netdemo.config.KtHttpLogInterceptor
-import com.cainiaowo.netdemo.config.LocalCookieJar
-import com.cainiaowo.netdemo.config.RetryInterceptor
-import com.cainiaowo.netdemo.support.IHttpCallback
+import com.cainiaowo.netdemo.okhttp.config.CaiNiaoInterceptor
+import com.cainiaowo.netdemo.okhttp.config.KtHttpLogInterceptor
+import com.cainiaowo.netdemo.okhttp.config.LocalCookieJar
+import com.cainiaowo.netdemo.okhttp.config.RetryInterceptor
+import com.cainiaowo.netdemo.okhttp.support.IHttpCallback
 import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.IOException
@@ -15,14 +17,9 @@ import java.util.concurrent.TimeUnit
 
 /**
  * IHttpApi的实现类：使用OkHttp
+ * 单例模式
  */
-class OkHttpApi : IHttpApi {
-
-    companion object {
-        private const val TAG = "OkHttpApi"   // TAG,用于日志观察
-    }
-
-    private var baseUrl = "http://api.qingyunke.com/"
+class OkHttpApi private constructor() : IHttpApi {
 
     /**
      * 最大重试次数
@@ -35,7 +32,7 @@ class OkHttpApi : IHttpApi {
     private val callMap = SimpleArrayMap<Any, Call>()
 
     // OkHttpClient
-    private val mClient = OkHttpClient.Builder()
+    private val defaultClient = OkHttpClient.Builder()
         .callTimeout(10, TimeUnit.SECONDS)       // 完整请求超时时长,从发起到接收返回数据,默认值0,不限定
         .connectTimeout(10, TimeUnit.SECONDS)   // 与服务器建立连接的时长,默认10s
         .readTimeout(10, TimeUnit.SECONDS)      // 读取服务器返回数据的时长
@@ -45,18 +42,46 @@ class OkHttpApi : IHttpApi {
         .cache(Cache(File("sdcard/cache", "okhttp"), 1024L))    // 网络请求的缓存数据
 //        .cookieJar(CookieJar.NO_COOKIES)      // 实现 接口CookieJar的实现类,以此来设置cookie相关的信息,NO_COOKIES只适合无COOKIE使用
         .cookieJar(LocalCookieJar())
+        .addNetworkInterceptor(CaiNiaoInterceptor())    // 公共Header拦截器,放在打印日志拦截器前可以观察是否添加成功
         .addNetworkInterceptor(KtHttpLogInterceptor {
             logLevel(KtHttpLogInterceptor.LogLevel.BODY)
         })
         .addNetworkInterceptor(RetryInterceptor(maxRetry))
         .build()
 
-    override fun get(params: Map<String, Any>, path: String, callback: IHttpCallback) {
-        val url = "$baseUrl$path"
-        val urlBuilder = url.toHttpUrl().newBuilder()
+    /**
+     * mClient可以根据自己配置修改,defaultClient是OkHttpApi中默认配置的client
+     */
+    private var mClient = defaultClient
+
+    fun getClient() = mClient
+
+    /**
+     * 配置自定义client
+     */
+    fun initClientConfig(client: OkHttpClient) {
+        this.mClient = client
+    }
+
+    /**
+     * 单例实现
+     */
+    companion object {
+        @Volatile
+        private var api: OkHttpApi? = null
+
+        @Synchronized
+        fun getInstance(): OkHttpApi {
+            return api ?: OkHttpApi().also { api = it }
+        }
+    }
+
+    override fun get(params: Map<String, Any>, urlStr: String, callback: IHttpCallback) {
+        val urlBuilder = urlStr.toHttpUrl().newBuilder()
         params.forEach { entry ->
             urlBuilder.addEncodedQueryParameter(entry.key, entry.value.toString())
         }
+
         val request = Request.Builder()
             .get()
             .tag(params)
@@ -77,12 +102,13 @@ class OkHttpApi : IHttpApi {
         })
     }
 
-    override fun post(body: Any, path: String, callback: IHttpCallback) {
-        val url = "$baseUrl$path"
+    override fun post(body: Any, urlStr: String, callback: IHttpCallback) {
+        val reqBody = Gson().toJson(body).toRequestBody("application/json".toMediaType())
+
         val request = Request.Builder()
-            .post(Gson().toJson(body).toRequestBody())
+            .post(reqBody)
             .tag(body)
-            .url("https://testapi.cniao5.com/accounts/login")
+            .url(urlStr)
             .build()
         val newCall = mClient.newCall(request)
         // 存储请求,用于取消
