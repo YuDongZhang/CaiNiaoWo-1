@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                             result,
                             NetResponse::class.java
                         )
-                        postResult.text = CaiNiaoUtils.decodeData(dataObj.toString())
+                        postResult.text = CaiNiaoUtils.decodeData(dataObj?.toString())
                     }
                 }
 
