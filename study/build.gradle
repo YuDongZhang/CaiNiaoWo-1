@@ -1,8 +1,21 @@
-apply plugin: 'com.android.library'
+// 根据gradle.properties中singleModule的值来确定当前模块作为APK还是子模块
+// singleModule=true表示作为一个APK
+// singleModule=false表示作为一个子模块
+if (singleModule.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
 apply from: '../dependencies.gradle'
 
 android {
     // from dependencies.gradle
+    defaultConfig {
+        // 作为APK运行时需要有独立的applicationId
+        if (singleModule.toBoolean()) {
+            applicationId "com.cainiaowo.study"
+        }
+    }
 }
 
 dependencies {
