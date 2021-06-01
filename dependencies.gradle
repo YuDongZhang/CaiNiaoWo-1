@@ -16,6 +16,23 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        // Java的配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                // room的scheme
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+                // ARouter
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        // Kotlin的配置
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -104,5 +121,14 @@ dependencies {
     implementation "io.insert-koin:koin-android-ext:$koin_version"
 
     testImplementation "io.insert-koin:koin-test:$koin_version"
+    // endregion
+
+    // region ARouter
+    implementation 'com.alibaba:arouter-api:1.4.0'
+    kapt 'com.alibaba:arouter-compiler:1.2.1'
+    // endregion
+
+    // region livedata eventbus
+    implementation 'io.github.jeremyliao:live-event-bus-x:1.8.0'
     // endregion
 }
