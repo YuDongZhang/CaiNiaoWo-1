@@ -23,4 +23,10 @@ dependencies {
 
     // 腾讯的key-value组件
     implementation 'com.tencent:mmkv-static:1.2.9'
+
+    // coil图片加载库
+    implementation 'io.coil-kt:coil:1.2.2'
+
+    // Jetpack startup组件
+    api 'androidx.startup:startup-runtime:1.0.0'
 }
