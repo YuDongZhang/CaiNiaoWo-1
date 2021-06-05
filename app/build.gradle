@@ -6,9 +6,16 @@ android {
     defaultConfig {
         applicationId "com.cainiaowo.app"
     }
-
 }
 
 dependencies {
     // from dependencies.gradle
+    if (!singleModule.toBoolean()) {
+        implementation project(path: ':course')
+        implementation project(path: ':home')
+        implementation project(path: ':login')
+        implementation project(path: ':mine')
+        implementation project(path: ':study')
+        implementation project('::service')
+    }
 }
