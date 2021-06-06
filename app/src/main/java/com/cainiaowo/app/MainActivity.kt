@@ -1,17 +1,25 @@
 package com.cainiaowo.app
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.cainiaowo.app.databinding.ActivityMainBinding
+import com.cainiaowo.common.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    private lateinit var binding: ActivityMainBinding
+    override fun getLayoutRes() = R.layout.activity_main
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initView() {
+        super.initView()
+        val navController = findNavController(R.id.fcv_main)
+        mBinding.bnvMain.setupWithNavController(navController)
+    }
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun initConfig() {
+        super.initConfig()
+    }
+
+    override fun initData() {
+        super.initData()
     }
 }
