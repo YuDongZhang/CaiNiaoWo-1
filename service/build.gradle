@@ -8,4 +8,8 @@ android {
 dependencies {
     // from dependencies.gradle
     api project(path: ':common')
+
+    // 调试工具
+    debugImplementation "io.github.didi.dokit:dokitx:$dokitx_version"
+    releaseImplementation "io.github.didi.dokit:dokitx-no-op:$dokitx_version"
 }

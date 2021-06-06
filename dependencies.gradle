@@ -62,7 +62,7 @@ dependencies {
 
     // region 平台相关的基础库
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.core:core-ktx:1.5.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -71,18 +71,18 @@ dependencies {
     // endregion
 
     // region 协程
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
     // endregion
 
     // region JetPack
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.3.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime:2.3.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
-    kapt "androidx.lifecycle:lifecycle-common-java8:2.2.0"
+    kapt "androidx.lifecycle:lifecycle-common-java8:2.3.1"
 
     implementation 'androidx.room:room-runtime:2.2.6'
     implementation 'androidx.room:room-common:2.2.6'
@@ -124,8 +124,8 @@ dependencies {
     // endregion
 
     // region ARouter
-    implementation 'com.alibaba:arouter-api:1.4.0'
-    kapt 'com.alibaba:arouter-compiler:1.2.1'
+    implementation 'com.alibaba:arouter-api:1.5.0'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
     // endregion
 
     // region livedata eventbus

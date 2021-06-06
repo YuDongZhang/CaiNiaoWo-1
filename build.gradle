@@ -18,11 +18,20 @@ buildscript {
         navigation_version = "2.3.1"    // navigation版本号,classpath中的版本号要与子模块中dependencies中一致
 
         koin_version = "3.0.2"  // koin v3版本号
+
+        dokitx_version = "3.4.0-alpha04"    // dokit版本号
     }
 
     repositories {
         google()
         mavenCentral()
+        // 阿里云云效仓库：https://maven.aliyun.com/mvn/guide
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        // 华为开源镜像：https://mirrors.huaweicloud.com
+        maven { url 'https://repo.huaweicloud.com/repository/maven' }
+        // JitPack 远程仓库：https://jitpack.io
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.1"
@@ -34,15 +43,28 @@ buildscript {
         // ARouter
         classpath "com.alibaba:arouter-register:1.0.2"
 
+        // 流量监控以及其他AOP功能（可选）:dokit调试辅助工具
+        // http://xingyun.xiaojukeji.com/docs/dokit/#/androidGuide
+        classpath "io.github.didi.dokit:dokitx-plugin:$dokitx_version"
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
+apply plugin: 'com.didi.dokit'
+
 allprojects {
     repositories {
         google()
         mavenCentral()
+        // 阿里云云效仓库：https://maven.aliyun.com/mvn/guide
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        // 华为开源镜像：https://mirrors.huaweicloud.com
+        maven { url 'https://repo.huaweicloud.com/repository/maven' }
+        // JitPack 远程仓库：https://jitpack.io
+        maven { url 'https://jitpack.io' }
     }
 }
 
