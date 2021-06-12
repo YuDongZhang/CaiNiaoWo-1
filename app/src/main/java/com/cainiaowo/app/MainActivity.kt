@@ -1,5 +1,7 @@
 package com.cainiaowo.app
 
+import android.view.MenuItem
+import androidx.core.view.forEachIndexed
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -31,24 +33,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             vp2Main.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    bnvMain.selectedItemId = when (position) {
-                        INDEX_HOME -> R.id.homeFragment
-                        INDEX_COURSE -> R.id.courseFragment
-                        INDEX_STUDY -> R.id.studyFragment
-                        INDEX_MINE -> R.id.mineFragment
-                        else -> error("viewPager2的fragments索引位置${position}越界")
-                    }
+                    bnvMain.selectedItemId = bnvMain.menu.getItem(position).itemId
                 }
             })
+
+            // 存储menu item对应的index索引位置
+            val map = mutableMapOf<MenuItem, Int>()
+
+            bnvMain.menu.forEachIndexed { index, item ->
+                map[item] = index
+            }
+
             // BottomNavigationView点击时切换ViewPager2中的fragment
-            bnvMain.setOnNavigationItemSelectedListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.homeFragment -> vp2Main.currentItem = INDEX_HOME
-                    R.id.courseFragment -> vp2Main.currentItem = INDEX_COURSE
-                    R.id.studyFragment -> vp2Main.currentItem = INDEX_STUDY
-                    R.id.mineFragment -> vp2Main.currentItem = INDEX_MINE
-                    else -> error("bottomNavigationView的itemId${menuItem.itemId}没有对应viewPager2的元素")
-                }
+            bnvMain.setOnNavigationItemSelectedListener { item ->
+                vp2Main.currentItem =
+                    map[item] ?: error("bottomNavigationView的itemId${item.itemId}没有对应viewPager2的元素")
                 true
             }
         }
