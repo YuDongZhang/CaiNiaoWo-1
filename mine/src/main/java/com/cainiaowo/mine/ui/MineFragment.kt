@@ -35,8 +35,12 @@ class MineFragment : BaseFragment() {
 
             // 使用navigation跳转到UserInfoFragment
             ivUserIconMine.setOnClickListener {
-                val action = MineFragmentDirections.actionMineFragmentToUserInfoFragment()
-                findNavController().navigate(action)
+                val userInfo = viewModel.liveUserInfo.value
+                userInfo?.let {
+                    val action = MineFragmentDirections
+                        .actionMineFragmentToUserInfoFragment(it)
+                    findNavController().navigate(action)
+                }
             }
         }
     }
@@ -44,7 +48,7 @@ class MineFragment : BaseFragment() {
     override fun initData() {
         super.initData()
         CaiNiaoDbHelper.getLiveUserInfo(requireContext()).observerKt {
-            viewModel.liveUser.value = it
+            viewModel.getUserInfo(it?.token)
         }
     }
 }

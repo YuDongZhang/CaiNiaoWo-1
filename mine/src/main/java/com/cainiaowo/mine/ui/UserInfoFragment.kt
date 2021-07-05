@@ -1,43 +1,39 @@
 package com.cainiaowo.mine.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.cainiaowo.common.base.BaseFragment
 import com.cainiaowo.mine.R
 import com.cainiaowo.mine.databinding.FragmentUserInfoBinding
-import com.cainiaowo.service.repo.CaiNiaoDbHelper
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 用户信息界面
  */
 class UserInfoFragment : BaseFragment() {
 
-    private val viewModel: MineViewModel by viewModel()
+    private val args by navArgs<UserInfoFragmentArgs>()
 
     override fun getLayoutRes() = R.layout.fragment_user_info
 
     override fun bindView(view: View, savedInstanceState: Bundle?) =
         FragmentUserInfoBinding.bind(view).apply {
-            vm = viewModel
 
             // Toolbar返回
             toolbarUserInfo.setNavigationOnClickListener {
                 findNavController().navigateUp()
             }
 
+            toolbarUserInfo.navigationIcon?.setTint(Color.WHITE)
+
             // Button返回
             btnSaveUserInfo.setOnClickListener {
                 findNavController().navigateUp()
             }
+
+            info = args.info
         }
 
-    override fun initData() {
-        super.initData()
-        CaiNiaoDbHelper.getLiveUserInfo(requireContext()).observerKt {
-            // 获取UserInfo接口数据
-
-        }
-    }
 }

@@ -18,5 +18,9 @@
         android:id="@+id/userInfoFragment"
         android:name="com.cainiaowo.mine.ui.UserInfoFragment"
         android:label="UserInfoFragment"
-        tools:layout="@layout/fragment_user_info" />
+        tools:layout="@layout/fragment_user_info">
+        <argument
+            android:name="info"
+            app:argType="com.cainiaowo.mine.network.UserInfoRsp" />
+    </fragment>
 </navigation>

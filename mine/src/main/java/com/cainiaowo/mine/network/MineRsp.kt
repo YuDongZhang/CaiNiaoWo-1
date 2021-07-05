@@ -1,11 +1,14 @@
 package com.cainiaowo.mine.network
 
+import android.os.Parcelable
 import androidx.annotation.Keep
+import kotlinx.parcelize.Parcelize
 
 /**
  * mine模块用户信息的返回数据
  */
 @Keep
+@Parcelize
 data class UserInfoRsp(
     val company: String?, // 菜鸟窝
     val desc: String?, // 菜鸟窝创始人,首席体验官兼首席客服。
@@ -20,4 +23,4 @@ data class UserInfoRsp(
     val real_name: String?, // 艾文
     val username: String?, // Ivan.wong
     val work_years: String? // 5-10
-)
+) : Parcelable

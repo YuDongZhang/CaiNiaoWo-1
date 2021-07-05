@@ -13,7 +13,7 @@ interface IMineService {
     /**
      * 用户详情信息的获取
      */
-    @GET("/member/userinfo")
+    @GET("member/userinfo")
     fun getUserInfo(@Header("token") token: String?): Call<BaseCaiNiaoRsp>
 
 }

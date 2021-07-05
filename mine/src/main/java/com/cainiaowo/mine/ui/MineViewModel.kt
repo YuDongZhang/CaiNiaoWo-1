@@ -1,22 +1,24 @@
 package com.cainiaowo.mine.ui
 
-import androidx.lifecycle.MutableLiveData
 import com.cainiaowo.common.base.BaseViewModel
-import com.cainiaowo.mine.network.UserInfoRsp
-import com.cainiaowo.service.repo.CaiNiaoUserInfo
+import com.cainiaowo.mine.repo.IMineResource
 
 /**
  * 我的界面逻辑的viewModel
  */
-class MineViewModel : BaseViewModel() {
-
-    /**
-     * MineFragment中使用
-     */
-    val liveUser = MutableLiveData<CaiNiaoUserInfo>()
+class MineViewModel(private val resource: IMineResource) : BaseViewModel() {
 
     /**
      * UserInfoFragment中使用
      */
-    val liveInfo = MutableLiveData<UserInfoRsp>()
+    val liveUserInfo = resource.liveUserInfo
+
+    /**
+     * 获取UserInfo
+     */
+    fun getUserInfo(token: String?) {
+        serveAwait {
+            resource.getUserInfo(token)
+        }
+    }
 }
