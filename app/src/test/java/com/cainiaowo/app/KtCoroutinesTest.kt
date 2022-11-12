@@ -5,10 +5,27 @@ import org.junit.Test
 import kotlin.system.measureTimeMillis
 
 class KtCoroutinesTest {
+    /*
+     GlobalScope   是全生命周期的 , launch 和 async 差不多,返回的结果不一样
 
+     runBlocking{}   阻塞线程 , 可以用于桥接普通函数和协程
+     说明 : 所有的协程和挂起函数只能在协程调用 , 你写了一个协程 , 可以在一个地方用runblocking 调用你写的协程 ,就是这
+     一块的生命周期是有效的 , runblocking要执行完才能执行下一步 .
+
+      runBlocking中是可以直接写launch 和 async 的 , 返回的对象是job , deferrod , 当他们调join方法,必须等这个
+      协程执行完才执行下一步 ,调cancel()会直接取消执行 .
+
+      withTimeout   超时会自动取消内部协程,并抛出异常
+     withTimeoutOrNull      超时会自动取消内部协程,不抛异常
+
+     await     可以获取async的异步Deferred结果,可以等待的
+
+     suspend suspend 关键字可以帮助我们消除回调，用同步的写法写异步。挂起函数
+
+     */
     @Test
     fun testKtCoroutines() {
-//        testLaunch()
+      //  testLaunch()
 
 //        testAsync()
 
@@ -22,9 +39,10 @@ class KtCoroutinesTest {
     }
 
     /**
-     * 1. CoroutineScope.launch    异步,不阻塞线程
+     * 1. CoroutineScope.launch    异步,不阻塞线程,就是同时执行的.
      */
-    private fun testLaunch() {
+    @Test
+     fun testLaunch() {
         val time = measureTimeMillis {
             GlobalScope.launch {
                 Thread.sleep(1000)
@@ -46,7 +64,8 @@ class KtCoroutinesTest {
      * 2. CoroutineScope.async    异步,不阻塞线程
      *    返回Deferred
      */
-    private fun testAsync() {
+    @Test
+     fun testAsync() {
         val time = measureTimeMillis {
             GlobalScope.async {
                 Thread.sleep(1000)
@@ -66,7 +85,8 @@ class KtCoroutinesTest {
      * 3. runBlocking   阻塞线程
      *    可以用于桥接普通函数和协程
      */
-    private fun testRunBlocking() {
+    @Test
+     fun testRunBlocking() {
         val time = measureTimeMillis {
             runBlocking {
                 println("testRunBlocking在runBlocking内部delay前---,currentThread: ${Thread.currentThread()}")
@@ -81,8 +101,12 @@ class KtCoroutinesTest {
     /**
      * 4. cancel join
      *    runBlocking会等待内部协程执行完毕才结束
+     *
+     *    l1 , l2 都是job
+     *    a2 是deferrod
      */
-    private fun testCancelJoin() = runBlocking {
+    @Test
+     fun testCancelJoin() = runBlocking {
         val time = measureTimeMillis {
             val L1 = launch {
                 println("testCancelJoin第一个launch,currentThread: ${Thread.currentThread()}")
@@ -132,7 +156,8 @@ class KtCoroutinesTest {
     /**
      * 6. await     可以获取async的异步Deferred结果
      */
-    private fun testAwait() = runBlocking {
+    @Test
+     fun testAwait() = runBlocking {
         val time = measureTimeMillis {
             val A1 = async {
                 println("testAwait第一个async,currentThread: ${Thread.currentThread()}")
@@ -146,6 +171,7 @@ class KtCoroutinesTest {
 //                88888
                 getA2Value()
             }
+            //会等到都执行完再打印 , 上面那个时间是3000 , a1.getcomplete
             println("testAwait非async部分,currentThread: ${Thread.currentThread()},结果: ${A1.await()}  ${A2.await()}")
         }
         println("testAwait耗时: $time")
