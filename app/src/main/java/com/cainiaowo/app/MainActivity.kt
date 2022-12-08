@@ -3,15 +3,35 @@ package com.cainiaowo.app
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cainiaowo.app.databinding.ActivityMainBinding
+import com.cainiaowo.common.base.BaseActivity
+import com.cainiaowo.common.ktx.bindView
 
-class MainActivity : AppCompatActivity() {
+//AppCompatActivity(R.layout.activity_main) 也可以写这种
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    private lateinit var binding: ActivityMainBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun getLayoutRes(): Int {
+        return R.layout.activity_main
     }
+
+    override fun initConfig() {
+        super.initConfig()
+    }
+
+    override fun initView() {
+        super.initView()
+    }
+
+    override fun initData() {
+        super.initData()
+    }
+
+    /*override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bindView<ActivityMainBinding>(R.layout.activity_main)
+        initConfig()
+    }
+
+    private fun initConfig(){
+
+    }*/
 }
