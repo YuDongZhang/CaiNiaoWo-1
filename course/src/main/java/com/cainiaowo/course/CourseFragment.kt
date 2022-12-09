@@ -18,8 +18,10 @@ class CourseFragment : BaseFragment() {
     }
 
     override fun bindView(view: View, savedInstanceState: Bundle?): ViewDataBinding {
-
-        return FragmentCourseBinding.bind(view)
+        //also 下面可以拿到databing引用 , 从下面it 可以理解就是 databinding  , it一般就是指上面这一块
+        return FragmentCourseBinding.bind(view).also {
+            it.tvTitleFragment
+        }
     }
 
 
