@@ -2,10 +2,11 @@ package com.hym.netdemo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.cainiaowo.netdemo.retrofit.model.ApiResponse
+import com.cainiaowo.netdemo.retrofit.model.DataResult
+import com.cainiaowo.netdemo.retrofit.model.UNKNOWN_ERROR_CODE
 import com.google.gson.Gson
-import com.hym.netdemo.model.ApiResponse
-import com.hym.netdemo.model.DataResult
-import com.hym.netdemo.model.UNKNOWN_ERROR_CODE
+
 import okhttp3.Response
 import retrofit2.Call
 import retrofit2.await
@@ -86,7 +87,7 @@ fun <T: Any> Call<T>.toLivedata(): LiveData<T?> {
  * 扩展retrofit的返回数据，调用await，并catch超时等异常
  * @return dataResult 返回格式为ApiResponse封装
  */
-suspend fun <T : Any> Call<T>.serverData(): DataResult<T>{
+suspend fun <T : Any> Call<T>.serverData(): DataResult<T> {
     var result: DataResult<T> = DataResult.Loading
     kotlin.runCatching {
         this.await()

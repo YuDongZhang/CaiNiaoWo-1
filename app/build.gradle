@@ -16,7 +16,7 @@ dependencies {
         implementation project(path: ':login')
         implementation project(path: ':mine')
         implementation project(path: ':study')
-        implementation project(path: ':common')
-        implementation project('::service')
     }
+    implementation project(path: ':common')
+    implementation project('::service')
 }
