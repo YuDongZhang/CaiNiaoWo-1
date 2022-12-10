@@ -19,11 +19,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun getLayoutRes() = R.layout.activity_main
 
+    /**
+     * 使用这种方式可以复用Fragment
+     * 如果不想复用Fragment,泛型可以设置成<Int, ()->Fragment>,然后在value部分使用{XxxFragment()},
+     * 在MainViewPagerAdapter的createFragment中通过fragments[position]?.invoke()获取fragment实例
+     */
+
     private val fragments = mapOf<Int, Fragment>(
+//    private val fragments = mapOf<Int,ResFragment >(
         INDEX_HOME to HomeFragment(),
         INDEX_COURSE to CourseFragment(),
         INDEX_STUDY to StudyFragment(),
         INDEX_MINE to MineFragment(),
+//         INDEX_MINE to {MineFragment()}
     )
 
     override fun initView() {
@@ -63,4 +71,11 @@ class MainViewPagerAdapter(
         return fragments[position] ?: error("请确保fragments数据源和viewPager2的index匹配设置")
     }
 
+    //invoke获取实例
+//    override fun createFragment(position: Int) =
+//        fragments[position]?.invoke() ?: throw java.lang.IndexOutOfBoundsException("viewpage参数越界了")
+
 }
+
+//类型别名的函数定义
+//typealias ResFragment = () -> Fragment

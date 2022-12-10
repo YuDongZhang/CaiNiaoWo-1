@@ -65,7 +65,7 @@ abstract class BaseFragment : Fragment {  //Fragment() 可以写带括号 带构
     /**
      * 扩展LiveData的observe函数
      */
-    protected fun <T : Any> LiveData<T>.observerKt(block: (T?) -> Unit) {
+    protected inline fun <T : Any> LiveData<T>.observerKt(crossinline block: (T?) -> Unit) {
         this.observe(viewLifecycleOwner) { data ->
             block.invoke(data)
         }

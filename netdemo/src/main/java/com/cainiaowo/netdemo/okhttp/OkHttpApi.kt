@@ -144,7 +144,7 @@ class OkHttpApi private constructor() : IHttpApi {
     /**
      * 使用协程形式的get请求，使用runblocking，也可以使用suspend修饰
      */
-    fun get(params: Map<String, Any>, urlStr: String) = runBlocking {
+   /* fun get(params: Map<String, Any>, urlStr: String) = runBlocking {
         val urlBuilder = urlStr.toHttpUrl().newBuilder()
         params.forEach { entry ->
             urlBuilder.addEncodedQueryParameter(entry.key, entry.value.toString())
@@ -162,11 +162,11 @@ class OkHttpApi private constructor() : IHttpApi {
         callMap.put(request.tag(), newCall)
         newCall.call()
     }
-
+*/
     /**
      * 自定义扩展函数，扩展okhttp的call的异步执行方式，结合协程，返回dataresult的数据响应
      */
-    private suspend fun Call.call(async: Boolean = true): Response {
+    /*private suspend fun Call.call(async: Boolean = true): Response {
         return suspendCancellableCoroutine { continuation ->
             if (async) {
                 enqueue(object : Callback {
@@ -191,5 +191,5 @@ class OkHttpApi private constructor() : IHttpApi {
                 }
             }
         }
-    }
+    }*/
 }
