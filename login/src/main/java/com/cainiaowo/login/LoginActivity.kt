@@ -10,7 +10,7 @@ import com.cainiaowo.login.databinding.ActivityLoginBinding
  */
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
-    private val viewModel: LoginViewModel by viewModels { defaultViewModelProviderFactory }
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun getLayoutRes() = R.layout.activity_login
 
