@@ -3,7 +3,7 @@ package com.cainiaowo.common.network.support;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.EncryptUtils;
-import com.cainiaowo.common.network.config.CaiNiaoConfigKt;
+import com.cainiaowo.netdemo.okhttp.config.CaiNiaoConfigKt;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

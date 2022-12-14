@@ -1,5 +1,6 @@
 package com.cainiaowo.common.network
 
+
 import com.cainiaowo.common.network.config.CaiNiaoInterceptor
 import com.cainiaowo.common.network.config.KtHttpLogInterceptor
 import com.cainiaowo.common.network.config.LocalCookieJar
@@ -55,7 +56,7 @@ object KtRetrofit {
         if (retrofit == null) {
             throw UninitializedPropertyAccessException("Retrofit必须初始化,需要配置baseUrl")
         } else {
-            return this.retrofit!!.create(serviceClazz)
+            return retrofit!!.create(serviceClazz)
         }
     }
 }
