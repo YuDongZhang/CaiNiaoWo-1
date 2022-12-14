@@ -17,10 +17,11 @@ interface LoginService {
     /**
      * 使用协程
      */
+    //因为在 iloginresourece里面用的就是挂起函数
     @GET("accounts/phone/is/register")
-    suspend fun checkRegister(@Query("mobi") mobi: String): Call<BaseCaiNiaoRsp>
+    fun checkRegister(@Query("mobi") mobi: String): Call<BaseCaiNiaoRsp>
 
     @POST("accounts/course/10301/login")
-    suspend fun login(@Body reqBody: LoginReqBody): Call<BaseCaiNiaoRsp>
+    fun login(@Body reqBody: LoginReqBody): Call<BaseCaiNiaoRsp>
 
 }

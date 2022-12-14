@@ -1,8 +1,8 @@
 package com.cainiaowo.common.network.support
 
 import androidx.lifecycle.LiveData
-import com.cainiaowo.common.network.model.ApiResponse
-import com.cainiaowo.common.network.model.UNKNOWN_ERROR_CODE
+import com.cainiaowo.netdemo.retrofit.model.ApiResponse
+import com.cainiaowo.netdemo.retrofit.model.UNKNOWN_ERROR_CODE
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Callback

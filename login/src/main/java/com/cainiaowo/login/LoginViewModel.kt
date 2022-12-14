@@ -24,20 +24,35 @@ class LoginViewModel(private val resource: ILoginResource) : BaseViewModel() {
     val obMobile = ObservableField<String>()
     val obPassword = ObservableField<String>()
 
-//    val catchEX = CoroutineExceptionHandler { coroutineContext, throwable ->
-//        LogUtils.e("异常${throwable.message}") }
+    val liveRegisterRsp = resource.registerRsp
+    val liveLoginRsp = resource.loginRsp
 
-    /** 调用登录2步 , 1. 判断手机号是否已经注册 ---*/
-    fun goLogin() {
-//        viewModelScope.launch(catchEX) {
-//            resource.checkRegister("18648957777")
-//            resource.requestLogin(LoginReqBody("18648957777","cn5123456"))
-//        }
-        //封装之后可以这样写
+    /**
+     * 判断手机号是否注册
+     */
+    private fun checkRegister(mobi: String) = serveAwait {
+        resource.checkRegister(mobi)
+    }
+
+    /**
+     * 调用登录
+     */
+    internal fun repoLogin() {
+        val account = obMobile.get() ?: return
+        val password = obPassword.get() ?: return
         serveAwait {
-            resource.checkRegister("18648957777")
-            resource.requestLogin(LoginReqBody("18648957777", "cn5123456"))
+            resource.requestLogin(LoginReqBody(account, password))
         }
+    }
+
+    /**
+     * 调用登录,两步
+     * 1. 判断手机号是否注册
+     * 2. 已经注册的,才去调用登录
+     */
+    fun goLogin() {
+        val account = obMobile.get() ?: return
+        checkRegister(account)
     }
 
     fun forget(v: View) {

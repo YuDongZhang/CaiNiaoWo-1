@@ -1,10 +1,8 @@
-package com.cainiaowo.service.network
+package com.cainiaowo.common.network
 
 import androidx.annotation.Keep
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
-import com.cainiaowo.common.network.retrofit.model.DataResult
-import com.cainiaowo.common.network.retrofit.model.succeed
 import com.cainiaowo.common.network.support.CaiNiaoUtils
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -94,31 +92,5 @@ inline fun <reified T> BaseCaiNiaoRsp.onBizOK(
     if (code == BaseCaiNiaoRsp.SERVER_CODE_SUCCESS) {
         action.invoke(code, this.toEntity<T>(), message)
     }
-    return this
-}
-
-//com.cainiaowo.login.repo.LoginRepo 里面返回是BaseCaiNiaoRsp所以我们用 DataResult 泛型<R>
-@OptIn(ExperimentalContracts::class)//试验性的特性
-inline fun <R> DataResult<R>.onSuccess(action: R.() -> Unit): DataResult<R> {//为了链式操作:DataResult<R> 把自己返回出去
-    //要使用dsl landa 表达式形式 对泛型的解析
-    contract {
-        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
-    }
-    //invoke老师讲的是放到 onSuccess中执行
-    //判断是数据类型然后返回出去
-    if (succeed) action.invoke((this as DataResult.Success).data)
-
-    return this
-}
-
-@OptIn(ExperimentalContracts::class)//试验性的特性
-inline fun <R> DataResult<R>.onFailure(
-    action: (exception: Throwable) -> Unit
-): DataResult<R> {
-    //要使用dsl landa 表达式形式 对泛型的解析
-    contract {
-        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
-    }
-    if (this is DataResult.Error) action.invoke(exception)
     return this
 }
