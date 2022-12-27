@@ -3,8 +3,8 @@ package com.cainiaowo.service.network
 import androidx.annotation.Keep
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
-import com.cainiaowo.common.network.retrofit.model.DataResult
-import com.cainiaowo.common.network.retrofit.model.succeed
+import com.cainiaowo.common.network.model.DataResult
+import com.cainiaowo.common.network.model.succeed
 import com.cainiaowo.common.network.support.CaiNiaoUtils
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

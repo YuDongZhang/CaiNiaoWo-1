@@ -2,9 +2,9 @@ package com.cainiaowo.common.network.support
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.cainiaowo.common.network.retrofit.model.ApiResponse
-import com.cainiaowo.common.network.retrofit.model.DataResult
-import com.cainiaowo.common.network.retrofit.model.UNKNOWN_ERROR_CODE
+import com.cainiaowo.common.network.model.ApiResponse
+import com.cainiaowo.common.network.model.DataResult
+import com.cainiaowo.common.network.model.UNKNOWN_ERROR_CODE
 
 import com.google.gson.Gson
 

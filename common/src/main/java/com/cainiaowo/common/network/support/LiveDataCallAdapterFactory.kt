@@ -1,7 +1,7 @@
 package com.cainiaowo.common.network.support
 
 import androidx.lifecycle.LiveData
-import com.cainiaowo.netdemo.retrofit.model.ApiResponse
+import com.cainiaowo.common.network.model.ApiResponse
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
