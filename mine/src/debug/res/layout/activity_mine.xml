@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="bean"
+            type="androidx.databinding.ObservableField&lt;com.cainiaowo.mine.widget.ItemSettingsBean>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +17,11 @@
             android:id="@+id/isv_card"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:arrowColor="@{bean.arrowColor}"
+            app:icon="@{bean.iconRes}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{bean.title}"
+            app:titleColor="@{bean.titleColor}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
