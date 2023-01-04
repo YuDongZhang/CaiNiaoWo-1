@@ -32,7 +32,7 @@ class MineActivity : BaseActivity<ActivityMineBinding>() {
 
 
             // 第二种：通过DataBinding在Activity中直接操作,这需要在布局<data></data>中添加对应变量
-            val itemSettingsBean = ItemSettingsBean(iconRes = R.drawable.ic_shoping, title = "修改的Title标题")
+            val itemSettingsBean = ItemSettingsBean(iconRes = R.drawable.ic_shopping, title = "修改的Title标题")
 
             val obBean = ObservableField(itemSettingsBean)
             bean = obBean

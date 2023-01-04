@@ -1,0 +1,14 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="CommonTheme">
+        <!-- Customize your theme here. -->
+    </style>
+
+
+    <!--  用于ShapeableImageView的shapeAppearanceOverlay属性,参考https://blog.csdn.net/u013365445/article/details/108538964  -->
+    <!-- 圆形图片 -->
+    <style name="circleImageStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>

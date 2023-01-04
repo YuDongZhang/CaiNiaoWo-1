@@ -41,14 +41,14 @@ class ItemSettingsView @JvmOverloads constructor(
             val iconRGB = getColor(R.styleable.ItemSettingsView_iconColor, 0)
             itemBean.iconColor = iconRGB
             // title设置
-            itemBean.title = getString(R.styleable.ItemSettingsView_title) ?: "Title标题"
+            itemBean.title = getString(R.styleable.ItemSettingsView_title) ?: ""
             val titleRGB = getColor(
                 R.styleable.ItemSettingsView_titleColor,
                 resources.getColor(R.color.colorPrimaryText)
             )
             itemBean.titleColor = titleRGB
             // desc设置
-            itemBean.desc = getString(R.styleable.ItemSettingsView_desc) ?: "标题内容描述"
+            itemBean.desc = getString(R.styleable.ItemSettingsView_desc) ?: ""
             val descRGB = getColor(R.styleable.ItemSettingsView_descColor, 0)
             itemBean.descColor = descRGB
             // arrow设置
@@ -140,8 +140,8 @@ class ItemSettingsView @JvmOverloads constructor(
 @Keep
 data class ItemSettingsBean(
     var iconRes: Any = R.drawable.ic_gift_card,
-    var title: String = "Title标题",
-    var desc: String = "标题内容描述",
+    var title: String = "",
+    var desc: String = "",
     var titleColor: Int = R.color.colorPrimaryText,
     var descColor: Int = R.color.colorSecondaryText,
     var iconColor: Int = 0,      // svg图片支持通过setTint的方式,png等不支持
