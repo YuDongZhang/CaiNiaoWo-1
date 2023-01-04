@@ -35,6 +35,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 }
             }
             liveLoginRsp.observerKt {
+                finish()
                 ToastUtils.showShort("登陆结果 " + it.toString())
             }
         }
