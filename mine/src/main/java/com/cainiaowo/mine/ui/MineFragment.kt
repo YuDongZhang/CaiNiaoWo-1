@@ -1,10 +1,12 @@
-package com.cainiaowo.mine
+package com.cainiaowo.mine.ui
 
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.navigation.fragment.findNavController
 import com.alibaba.android.arouter.launcher.ARouter
 import com.cainiaowo.common.base.BaseFragment
+import com.cainiaowo.mine.R
 import com.cainiaowo.mine.databinding.FragmentMineBinding
 import com.cainiaowo.service.repo.CaiNiaoDbHelper
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,6 +31,12 @@ class MineFragment : BaseFragment() {
             btnLogoutMine.setOnClickListener {
                 CaiNiaoDbHelper.deleteUserInfo(requireContext())
                 ARouter.getInstance().build("/login/login").navigation()
+            }
+
+            // 使用navigation跳转到UserInfoFragment
+            ivUserIconMine.setOnClickListener {
+                val action = MineFragmentDirections.actionMineFragmentToUserInfoFragment()
+                findNavController().navigate(action)
             }
         }
     }

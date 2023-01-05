@@ -1,5 +1,6 @@
 package com.cainiaowo.mine
 
+import com.cainiaowo.mine.ui.MineViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

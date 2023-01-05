@@ -40,8 +40,9 @@ class CaiNiaoInterceptor : Interceptor {
             "version" to AppUtils.getAppVersionName()
         )
         // token仅在有值的时候才传递，
-        val tokenstr = ""
-        val localToken = SPStaticUtils.getString(SP_KEY_USER_TOKEN, tokenstr)
+//        val tokenstr = ""
+//        val localToken = SPStaticUtils.getString(SP_KEY_USER_TOKEN, tokenstr)
+        val localToken = originRequest.header("token") ?: "TOKEN_NULL"
         if (localToken.isNotEmpty()) {
             attachHeaders.add("token" to localToken)
         }
