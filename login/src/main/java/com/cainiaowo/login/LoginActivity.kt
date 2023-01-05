@@ -1,14 +1,18 @@
 package com.cainiaowo.login
 
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ToastUtils
 import com.cainiaowo.common.base.BaseActivity
+import com.cainiaowo.common.ktx.context
 import com.cainiaowo.login.databinding.ActivityLoginBinding
 import com.cainiaowo.login.net.RegisterRsp
+import com.cainiaowo.service.repo.CaiNiaoDbHelper
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 登录界面 , 请求是在ui层通过databinding 绑定 viewmodel
  */
+@Route(path = "/login/login")
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private val viewModel: LoginViewModel by viewModel()
@@ -35,13 +39,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 }
             }
             liveLoginRsp.observerKt {
-                finish()
                 ToastUtils.showShort("登陆结果 " + it.toString())
+                it?.let {
+                    CaiNiaoDbHelper.insertUserInfo(context, it)
+                }
+                // 关闭activity
+                finish()
             }
         }
-    }
-
-    override fun initData() {
-        super.initData()
     }
 }

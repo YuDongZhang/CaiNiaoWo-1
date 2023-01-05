@@ -1,5 +1,6 @@
 package com.cainiaowo.app
 
+import com.alibaba.android.arouter.launcher.ARouter
 import com.cainiaowo.common.BaseApplication
 import com.cainiaowo.common.ktx.application
 import com.cainiaowo.login.moduleLogin
@@ -23,5 +24,7 @@ class CnApplication : BaseApplication() {
 
         // dokit初始化配置
         AssistantApp.initConfig(application)
+        // ARouter初始化
+        ARouter.init(application)
     }
 }

@@ -6,6 +6,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.cainiaowo.service.R
 
 /**
  * 项目适配用的BindingAdapter
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide
  */
 @BindingAdapter("app:srcCompat", requireAll = false)
 fun setImageSrcCompat(iv: ImageView, src: Any?) {
+    val imgRes = src ?: R.drawable.icon_account
     Glide.with(iv).load(src).into(iv)
 }
 
