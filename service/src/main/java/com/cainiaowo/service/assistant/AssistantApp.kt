@@ -10,6 +10,7 @@ object AssistantApp {
 
     fun initConfig(application: Application) {
         DoKit.Builder(application)
+            .customKits(mutableListOf(ServerHostKit()))
             .build()
     }
 }
