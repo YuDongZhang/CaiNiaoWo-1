@@ -22,7 +22,7 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 协程网络请求 , 为了对   viewModelScope.launch 简写
      */
-    fun serveAwait(block: suspend CoroutineScope.() -> Unit) = viewModelScope.launch {
+    protected fun serveAwait(block: suspend CoroutineScope.() -> Unit) = viewModelScope.launch {
         isLoading.value = true
         block.invoke(this)//执行传入的代码
         isLoading.value = false

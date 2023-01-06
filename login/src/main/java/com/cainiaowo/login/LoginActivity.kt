@@ -4,6 +4,8 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ToastUtils
 import com.cainiaowo.common.base.BaseActivity
 import com.cainiaowo.common.ktx.context
+import com.cainiaowo.common.network.config.SP_KEY_USER_TOKEN
+import com.cainiaowo.common.utils.MMKVUtils
 import com.cainiaowo.login.databinding.ActivityLoginBinding
 import com.cainiaowo.login.net.RegisterRsp
 import com.cainiaowo.service.repo.CaiNiaoDbHelper
@@ -38,10 +40,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                     repoLogin()
                 }
             }
-            liveLoginRsp.observerKt {
-                ToastUtils.showShort("登陆结果 " + it.toString())
-                it?.let {
+            liveLoginRsp.observerKt { rsp ->
+//                ToastUtils.showShort("登陆结果 " + it.toString())
+                rsp?.let {
                     CaiNiaoDbHelper.insertUserInfo(context, it)
+                    MMKVUtils.put(SP_KEY_USER_TOKEN, it.token)
                 }
                 // 关闭activity
                 finish()

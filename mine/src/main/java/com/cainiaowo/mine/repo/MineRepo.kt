@@ -3,13 +3,13 @@ package com.cainiaowo.mine.repo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.LogUtils
-import com.cainiaowo.common.network.model.onFailure
-import com.cainiaowo.common.network.model.onSuccess
-import com.cainiaowo.common.network.support.serveData
+import com.cainiaowo.common.network.support.serverData
 import com.cainiaowo.mine.network.IMineService
 import com.cainiaowo.mine.network.UserInfoRsp
 import com.cainiaowo.service.network.onBizError
 import com.cainiaowo.service.network.onBizOK
+import com.cainiaowo.service.network.onFailure
+import com.cainiaowo.service.network.onSuccess
 
 /**
  * 我的模块相关的数据管理类
@@ -22,7 +22,7 @@ class MineRepo(private val service: IMineService) : IMineResource {
 
     override suspend fun getUserInfo(token: String?) {
         service.getUserInfo(token)
-            .serveData()
+            .serverData()
             .onSuccess {
                 // 接口响应成功
                 onBizError { code, message ->

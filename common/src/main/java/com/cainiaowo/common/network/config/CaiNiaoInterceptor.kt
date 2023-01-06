@@ -1,6 +1,7 @@
 package com.cainiaowo.common.network.config
 
 import com.blankj.utilcode.util.*
+import com.cainiaowo.common.utils.MMKVUtils
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import okhttp3.CacheControl
@@ -40,9 +41,8 @@ class CaiNiaoInterceptor : Interceptor {
             "version" to AppUtils.getAppVersionName()
         )
         // token仅在有值的时候才传递，
-//        val tokenstr = ""
-//        val localToken = SPStaticUtils.getString(SP_KEY_USER_TOKEN, tokenstr)
-        val localToken = originRequest.header("token") ?: "TOKEN_NULL"
+        val localToken =
+            MMKVUtils.getString(SP_KEY_USER_TOKEN, originRequest.header("token")) ?: ""
         if (localToken.isNotEmpty()) {
             attachHeaders.add("token" to localToken)
         }

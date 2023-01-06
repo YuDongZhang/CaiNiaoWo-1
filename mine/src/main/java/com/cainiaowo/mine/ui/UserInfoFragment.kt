@@ -1,6 +1,5 @@
 package com.cainiaowo.mine.ui
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -26,7 +25,7 @@ class UserInfoFragment : BaseFragment() {
                 findNavController().navigateUp()
             }
 
-            toolbarUserInfo.navigationIcon?.setTint(Color.WHITE)
+//            toolbarUserInfo.navigationIcon?.setTint(Color.WHITE)
 
             // Button返回
             btnSaveUserInfo.setOnClickListener {
