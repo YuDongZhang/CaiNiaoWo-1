@@ -2,9 +2,11 @@ package com.cainiaowo.login
 
 
 import com.cainiaowo.common.network.KtRetrofit
+import com.cainiaowo.common.utils.getBaseHost
 import com.cainiaowo.login.repo.ILoginResource
 import com.cainiaowo.login.repo.LoginRepo
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -15,7 +17,7 @@ val moduleLogin = module {
 
     // Retrofit service
     single {
-        KtRetrofit.initConfig("https://course.api.cniao5.com/")
+        get<KtRetrofit> { parametersOf(getBaseHost()) }
             .getService(LoginService::class.java)
     }
 
