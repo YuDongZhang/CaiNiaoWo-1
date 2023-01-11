@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.cainiaowo.study.viewmodel.StudyViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,13 +31,14 @@
             app:layout_constraintStart_toStartOf="@id/v_top_bg_study"
             app:layout_constraintTop_toTopOf="@id/v_top_bg_study"
             app:shapeAppearanceOverlay="@style/circleImageStyle"
-            app:srcCompat="@drawable/icon_default_header" />
+            app:srcCompat="@{vm.obUserInfo.user.logo_url??@drawable/icon_default_header}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name_study"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@{vm.obUserInfo.user.username??@string/str_user_name}"
             android:textColor="@color/colorPrimaryText"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="@id/iv_icon_study"
@@ -84,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:gravity="center_horizontal"
+            android:text="@{vm.liveStudyInfo.todayStudyTimeStr??@string/str_0_minute}"
             android:textColor="@color/colorPrimaryText"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/tv_today_study"
@@ -97,6 +103,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:text="@{vm.liveStudyInfo.totalStudyTimeStr??@string/str_0_minute}"
             android:textColor="@color/colorPrimaryText"
             android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_today_minute_study"
@@ -109,6 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:text="@{vm.liveStudyInfo.rankStr??@string/str_0_rank}"
             android:textColor="@color/colorPrimaryText"
             android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_total_minute_study"

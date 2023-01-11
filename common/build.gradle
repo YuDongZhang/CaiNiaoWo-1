@@ -34,4 +34,7 @@ dependencies {
 
     // Jetpack startup组件
     api 'androidx.startup:startup-runtime:1.0.0'
+
+    // 第三方RecyclerView库
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6'
 }
