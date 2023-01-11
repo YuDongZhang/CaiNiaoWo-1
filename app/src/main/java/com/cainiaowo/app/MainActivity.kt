@@ -9,8 +9,7 @@ import com.cainiaowo.common.widget.BnvVp2Mediator
 import com.cainiaowo.course.CourseFragment
 import com.cainiaowo.home.HomeFragment
 import com.cainiaowo.mine.MineContainerFragment
-import com.cainiaowo.mine.ui.MineFragment
-import com.cainiaowo.study.StudyFragment
+import com.cainiaowo.study.ui.StudyFragment
 
 //AppCompatActivity(R.layout.activity_main) 也可以写这种
 class MainActivity : BaseActivity<ActivityMainBinding>() {

@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_course" />
     <fragment
         android:id="@+id/studyFragment"
-        android:name="com.cainiaowo.study.StudyFragment"
+        android:name="com.cainiaowo.study.ui.StudyFragment"
         android:label="StudyFragment"
         tools:layout="@layout/fragment_study" />
     <fragment
