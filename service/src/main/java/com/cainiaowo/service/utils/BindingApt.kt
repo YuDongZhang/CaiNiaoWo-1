@@ -17,7 +17,6 @@ import com.cainiaowo.service.R
  */
 @BindingAdapter("app:srcCompat", requireAll = false)
 fun setImageSrcCompat(iv: ImageView, src: Any?) {
-    val imgRes = src ?: R.drawable.icon_default_header
     Glide.with(iv).load(src).into(iv)
 }
 

@@ -7,12 +7,13 @@ import com.cainiaowo.login.moduleLogin
 import com.cainiaowo.mine.moduleMine
 import com.cainiaowo.service.assistant.AssistantApp
 import com.cainiaowo.service.moduleService
+import com.cainiaowo.study.moduleStudy
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 
 class CnApplication : BaseApplication() {
 
-    private val modules = mutableListOf<Module>(moduleService, moduleLogin, moduleMine)
+    private val modules = mutableListOf<Module>(moduleService, moduleLogin, moduleMine, moduleStudy)
 
     override fun initConfig() {
         // 由于BaseApplication的initConfig()中没有内容,所以可以省略super.initConfig()

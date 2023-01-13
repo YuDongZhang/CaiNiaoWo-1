@@ -1,7 +1,6 @@
 package com.cainiaowo.study.network
 
 import androidx.annotation.Keep
-import com.cainiaowo.common.utils.getBaseHost
 
 
 /**
@@ -36,14 +35,14 @@ data class StudyInfoRsp(
  */
 @Keep
 data class StudiedRsp(
-    val datas: List<CourseInfo>?,
+    val datas: List<Data>?,
     val page: Int,
     val size: Int,
     val total: Int,
     val total_page: Int
 ) {
     @Keep
-    data class CourseInfo(
+    data class Data(
         val brief: String?,
         val comment_count: Int,
         val cost_price: Double,

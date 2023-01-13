@@ -4,10 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        
+        <variable
+            name="info"
+            type="com.cainiaowo.study.network.StudiedRsp.Data" />
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -27,6 +31,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@{info.img_url}"
                 tools:srcCompat="@drawable/img_course" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -34,8 +39,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="16sp"
+                android:text="@{info.name??`title of null`}"
                 app:layout_constraintBottom_toTopOf="@id/npb_progress_item_study"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_badge_item_study"

@@ -15,14 +15,14 @@ interface IStudyService {
 
     @GET("member/courses/studied")
     fun getStudyList(
-        @Query("page") page: Int,
-        @Query("size") size: Int
+        @Query("page") page: Int = 1,
+        @Query("size") size: Int = 10
     ): Call<BaseCaiNiaoRsp>
 
     @GET("member/courses/bought")
     fun getBoughtCourse(
-        @Query("page") page: Int,
-        @Query("size") size: Int
+        @Query("page") page: Int = 1,
+        @Query("size") size: Int = 10
     ): Call<BaseCaiNiaoRsp>
 
 }
