@@ -17,7 +17,17 @@ import com.cainiaowo.service.R
  */
 @BindingAdapter("app:srcCompat", requireAll = false)
 fun setImageSrcCompat(iv: ImageView, src: Any?) {
-    Glide.with(iv).load(src).into(iv)
+    val imgRes = when (src) {
+        is String -> {
+            when {
+                src.startsWith("//img.cainiao5.com") -> "https:$src"
+                src.startsWith("//img.cainiao5.com") -> "https:/$src"
+                else -> src
+            }
+        }
+        else -> src ?: R.drawable.icon_default_header
+    }
+    Glide.with(iv).load(imgRes).into(iv)
 }
 
 /// region ImageView app:tint    ImageViewBindingAdapter中未实现,所以如果在DataBinding布局中需要使用时自己实现

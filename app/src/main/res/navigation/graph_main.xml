@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/courseFragment"
-        android:name="com.cainiaowo.course.CourseFragment"
+        android:name="com.cainiaowo.course.ui.CourseFragment"
         android:label="CourseFragment"
         tools:layout="@layout/fragment_course" />
     <fragment

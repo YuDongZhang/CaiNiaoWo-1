@@ -59,8 +59,10 @@
                 app:layout_constraintStart_toStartOf="@id/tv_title_item_study"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_item_study"
                 app:progress_max="100"
+                app:progress_current="@{info.progress}"
                 app:progress_reached_color="@color/colorAccent"
-                tools:progress_current="20" />
+                tools:progress_current="20"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

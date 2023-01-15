@@ -3,6 +3,7 @@ package com.cainiaowo.app
 import com.alibaba.android.arouter.launcher.ARouter
 import com.cainiaowo.common.BaseApplication
 import com.cainiaowo.common.ktx.application
+import com.cainiaowo.course.moduleCourse
 import com.cainiaowo.login.moduleLogin
 import com.cainiaowo.mine.moduleMine
 import com.cainiaowo.service.assistant.AssistantApp
@@ -13,7 +14,14 @@ import org.koin.core.module.Module
 
 class CnApplication : BaseApplication() {
 
-    private val modules = mutableListOf<Module>(moduleService, moduleLogin, moduleMine, moduleStudy)
+    private val modules = mutableListOf<Module>(
+        moduleService,
+        moduleLogin,
+        moduleMine,
+        moduleStudy,
+        moduleCourse
+
+    )
 
     override fun initConfig() {
         // 由于BaseApplication的initConfig()中没有内容,所以可以省略super.initConfig()
