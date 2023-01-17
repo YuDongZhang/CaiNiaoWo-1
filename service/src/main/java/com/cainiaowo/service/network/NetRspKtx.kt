@@ -55,11 +55,13 @@ inline fun <reified T> BaseCaiNiaoRsp.toEntity(): T? {
         return null
     }
     // gson不允许我们将json对象采用String,所以单独处理
+    val decodeData = CaiNiaoUtils.decodeData(this.data)  //是为了方便调试 , debug能看到数据
     if (T::class.java.isAssignableFrom(String::class.java)) {
-        return CaiNiaoUtils.decodeData(this.data) as T
+//        return CaiNiaoUtils.decodeData(this.data) as T
+        return decodeData as T
     }
     return kotlin.runCatching {
-        GsonUtils.fromJson(CaiNiaoUtils.decodeData(this.data), T::class.java)
+        GsonUtils.fromJson(decodeData, T::class.java)
     }.onFailure { e ->
         e.printStackTrace()
     }.getOrNull()

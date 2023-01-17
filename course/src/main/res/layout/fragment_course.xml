@@ -15,16 +15,85 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_course_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorFullWidth="false"
+            app:tabMode="auto"
+            app:tabTextAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/course_category_selector"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="全部类型"
+            app:drawableEndCompat="@drawable/ic_drop_down"
+            app:layout_constraintEnd_toStartOf="@id/course_level_selector"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_course_category" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/course_level_selector"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="全部难度"
+            app:drawableEndCompat="@drawable/ic_drop_down"
+            app:layout_constraintBaseline_toBaselineOf="@id/course_category_selector"
+            app:layout_constraintEnd_toStartOf="@id/course_price_selector"
+            app:layout_constraintStart_toEndOf="@id/course_category_selector" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/course_price_selector"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="全部价格"
+            app:drawableEndCompat="@drawable/ic_drop_down"
+            app:layout_constraintBaseline_toBaselineOf="@id/course_category_selector"
+            app:layout_constraintEnd_toStartOf="@id/course_sort_selector"
+            app:layout_constraintStart_toEndOf="@id/course_level_selector" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/course_sort_selector"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="默认排序"
+            app:drawableEndCompat="@drawable/ic_drop_down"
+            app:layout_constraintBaseline_toBaselineOf="@id/course_category_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/course_price_selector" />
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_course"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:background="@color/colorWindowBackground"
             android:orientation="vertical"
-            app:adapter="@{vm.adapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/course_category_selector"
             tools:listitem="@layout/item_course" />
 
-
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -37,4 +37,7 @@ dependencies {
 
     // 第三方RecyclerView库
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6'
+
+    // XPopup
+    api 'com.github.li-xiaojun:XPopup:2.5.1'
 }
