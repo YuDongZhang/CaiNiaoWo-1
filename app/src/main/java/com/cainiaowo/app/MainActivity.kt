@@ -7,7 +7,7 @@ import com.cainiaowo.app.databinding.ActivityMainBinding
 import com.cainiaowo.common.base.BaseActivity
 import com.cainiaowo.common.widget.BnvVp2Mediator
 import com.cainiaowo.course.ui.CourseFragment
-import com.cainiaowo.home.HomeFragment
+import com.cainiaowo.home.ui.HomeFragment
 import com.cainiaowo.mine.MineContainerFragment
 import com.cainiaowo.study.ui.StudyFragment
 

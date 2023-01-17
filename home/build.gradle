@@ -21,4 +21,6 @@ android {
 dependencies {
     // from dependencies.gradle
     implementation project(path: ':service')
+    // Banner库
+    implementation 'io.github.youth5201314:banner:2.2.2'
 }
