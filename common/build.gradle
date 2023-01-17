@@ -40,4 +40,7 @@ dependencies {
 
     // XPopup
     api 'com.github.li-xiaojun:XPopup:2.5.1'
+
+    // AgentWeb：WebView库,https://github.com/Justson/AgentWeb
+    implementation 'com.github.Justson.AgentWeb:agentweb-core:v4.1.9-androidx'
 }
