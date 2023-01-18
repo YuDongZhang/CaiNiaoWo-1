@@ -77,6 +77,10 @@ data class StudiedRsp(
             }
         }
 
+        fun getLearnAndCommentCountStr(): String {
+            return "$lessons_played_time     ${comment_count}人评价"
+        }
+
         @Keep
         data class Course(
             val h5site: String?,
@@ -147,6 +151,10 @@ data class BoughtRsp(
                         return "https:$this"
                     }
                 }
+            }
+
+            fun getLearnAndCommentCountStr(): String {
+                return "$lessons_played_time     ${comment_count}人评价"
             }
 
             @Keep

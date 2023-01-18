@@ -10,6 +10,7 @@ import com.cainiaowo.mine.moduleMine
 import com.cainiaowo.service.assistant.AssistantApp
 import com.cainiaowo.service.moduleService
 import com.cainiaowo.study.moduleStudy
+import com.cainiaowo.video.moduleVideo
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 
@@ -21,7 +22,8 @@ class CnApplication : BaseApplication() {
         moduleMine,
         moduleStudy,
         moduleCourse,
-        moduleHome
+        moduleHome,
+        moduleVideo
     )
 
     override fun initConfig() {

@@ -1,0 +1,15 @@
+plugins {
+    id 'com.android.library'
+}
+apply from: '../dependencies.gradle'
+
+android {
+    // from dependencies.gradle
+}
+
+dependencies {
+    // from dependencies.gradle
+    implementation project(path: ':service')
+    // 视频框架
+    implementation 'cn.jzvd:jiaozivideoplayer:7.7.0'
+}

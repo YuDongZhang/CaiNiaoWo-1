@@ -50,7 +50,6 @@ class StudiedVH(private val binding: ItemCourseStudyBinding) : RecyclerView.View
         binding.info = info
         //把获取到的progress进度条数据给进度条 也可以用扩展函数app:progress_current实现
         // binding.npbProgressItemStudy.progress = info.progress.toInt()
-
         binding.card.setOnClickListener {
             ToastUtils.showShort("点击了${info.name}")
         }
