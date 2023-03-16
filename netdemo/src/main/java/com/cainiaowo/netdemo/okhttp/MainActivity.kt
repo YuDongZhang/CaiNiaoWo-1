@@ -62,5 +62,5 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    data class LoginReq(val mobi: String = "13067732886", val password: String = "123456789")
+    data class LoginReq(val mobi: String = "18648957777", val password: String = "cn5123456")
 }

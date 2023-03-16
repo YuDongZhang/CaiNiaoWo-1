@@ -7,6 +7,8 @@ import com.cainiaowo.netdemo.okhttp.config.LocalCookieJar
 import com.cainiaowo.netdemo.okhttp.config.RetryInterceptor
 import com.cainiaowo.netdemo.okhttp.support.IHttpCallback
 import com.google.gson.Gson
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
@@ -14,6 +16,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.resumeWithException
 
 /**
  * IHttpApi的实现类：使用OkHttp
@@ -144,7 +147,7 @@ class OkHttpApi private constructor() : IHttpApi {
     /**
      * 使用协程形式的get请求，使用runblocking，也可以使用suspend修饰
      */
-   /* fun get(params: Map<String, Any>, urlStr: String) = runBlocking {
+    fun get(params: Map<String, Any>, urlStr: String) = runBlocking {
         val urlBuilder = urlStr.toHttpUrl().newBuilder()
         params.forEach { entry ->
             urlBuilder.addEncodedQueryParameter(entry.key, entry.value.toString())
@@ -162,11 +165,10 @@ class OkHttpApi private constructor() : IHttpApi {
         callMap.put(request.tag(), newCall)
         newCall.call()
     }
-*/
-    /**
-     * 自定义扩展函数，扩展okhttp的call的异步执行方式，结合协程，返回dataresult的数据响应
-     */
-    /*private suspend fun Call.call(async: Boolean = true): Response {
+    /*
+    *自定义扩展函数，扩展okhttp的call的异步执行方式，结合协程，返回dataresult的数据响应
+     **/
+    private suspend fun Call.call(async: Boolean = true): Response {
         return suspendCancellableCoroutine { continuation ->
             if (async) {
                 enqueue(object : Callback {
@@ -177,12 +179,14 @@ class OkHttpApi private constructor() : IHttpApi {
                     }
 
                     override fun onResponse(call: Call, response: Response) {
-                        continuation.resume(response)
+                        continuation.resume(response, onCancellation ={} )
+
                     }
                 })
             } else {
-                continuation.resume(execute())
+                continuation.resume(execute(), onCancellation = {})
             }
+            //协程的取消
             continuation.invokeOnCancellation {
                 try {
                     cancel()
@@ -191,5 +195,9 @@ class OkHttpApi private constructor() : IHttpApi {
                 }
             }
         }
-    }*/
+    }
 }
+
+//private fun Any.resume(value: Response) {
+//
+//}

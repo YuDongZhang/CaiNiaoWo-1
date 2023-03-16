@@ -1,0 +1,34 @@
+第一步: IHttpApi 接口 , 里面封装get和post的同步和异步
+第二步: IHttpCallback  网络请求的接口回调 , 成功和失败
+第三步: OkHttpApi , IHttpApi的实现类：使用OkHttp
+       创建 OkHttpClient , 包含cookie , interceptor , 请求的数据的缓存
+       实现 get post 方法 , 在 newCall.enqueue() 参数的callback的时候调用自己写的 IHttpCallback成功和失败
+       request 强制网络更新的
+第四部: 直接实现 okhttp的实例 , 调用get post 方法
+
+第五步:  LocalCookieJar  看cookie 的持久化
+
+第六步: 关于拦截器,如果重试自定义拦截器 RetryInterceptor , 设置重试次数
+       KtHttpLogInterceptor 日志拦截器 ,本来就有,现在加一个更多自定义的
+       要注意拦截器的顺序
+
+第七步: OkHttpApi 请求的取消, 用map 和 request.tag() 来存储和管理 , 取消, 和取消所有
+
+第八步: CaiNiaoUtils utf-8加密和解密的工具 ,
+
+第九步: 项目相关，添加公共Header的拦截器 , CaiNiaoInterceptor对于 header的处理 ,
+
+retrofit :
+第一步 : 网络返回数据的封装一  DataResult
+        网络返回数据的封装二  ApiResponse
+
+第二步:  KtRetrofit 封装  , 包括获取和 传入service
+
+第三步: LiveDataCallAdapterFactory 将Retrofit的返回数据,转化为LiveData的Adapter的工厂类
+        LiveDataCallAdapter  将Retrofit的Call回调数据转化为LiveData的Adapter  ,
+        用到了ApiResponse
+
+第四步 : RspKtx.kt 扩展  okhttp3.Call.toLiveData()  okHttp的Call执行异步，并转化为liveData可观察结果
+        Response.toEntity()  将Response的对象，转化为需要的对象类型，也就是将body.string转为entity
+        看下对于 retrofit的扩展
+

@@ -108,9 +108,9 @@ suspend fun <T: Any> Call<T>.serverRsp(): ApiResponse<T> {
     val response = kotlin.runCatching {
         this.awaitResponse()
     }.onFailure {
-        result = ApiResponse.Companion.create(UNKNOWN_ERROR_CODE,it)
+        result = ApiResponse.create(UNKNOWN_ERROR_CODE,it)
     }.getOrThrow()
-    result = ApiResponse.Companion.create(response)
+    result = ApiResponse.create(response)
     return result
 }
 

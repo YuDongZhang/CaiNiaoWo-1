@@ -41,11 +41,15 @@ class CaiNiaoInterceptor : Interceptor {
         )
         // token仅在有值的时候才传递，
         val tokenstr = ""
+
         val localToken = SPStaticUtils.getString(SP_KEY_USER_TOKEN, tokenstr)
-        if (localToken.isNotEmpty()) {
+
+        if (localToken.isNotEmpty()) {//空不参加运算,所以判断一下
             attachHeaders.add("token" to localToken)
         }
+
         val signHeaders = mutableListOf<Pair<String, String>>()
+
         signHeaders.addAll(attachHeaders)
         // get的请求，参数
         if (originRequest.method == "GET") {
@@ -55,13 +59,15 @@ class CaiNiaoInterceptor : Interceptor {
         }
         // post的请求 formBody形式，或json形式的，都需要将内部的字段，遍历出来，参与sign的计算
         val requestBody = originRequest.body
+
         if (originRequest.method == "POST") {
-            // formBody
+            // formBody 请求方式
             if (requestBody is FormBody) {
                 for (i in 0 until requestBody.size) {
                     signHeaders.add(requestBody.name(i) to requestBody.value(i))
                 }
             }
+            // application/json 请求方式
             // json的body 需要将requestBody反序列化为json转为map application/json
             if (requestBody?.contentType()?.type == "application" && requestBody.contentType()?.subtype == "json") {
                 kotlin.runCatching {
@@ -78,17 +84,22 @@ class CaiNiaoInterceptor : Interceptor {
             }
         }
 
-        // TODO 算法：都必须是非空参数  sign = MD5（ascii排序后的 headers及params的key=value拼接&后，最后拼接appkey和value）//32位的大写,
+        // TODO 算法：都必须是非空参数  sign = MD5（ascii排序后的 headers及params的key=value拼接&后，
+        //  最后拼接appkey和value）//32位的大写,
         val signValue = signHeaders
+                //is first就是key ascii 排序后
             .sortedBy { it.first }
+                //为了拼接
             .joinToString("&") { "${it.first}=${it.second}" }
             .plus("&appkey=$NET_CONFIG_APPKEY")
-
+        //生成新的 Request 就是上面的 originRequest 添加
         val newBuilder = originRequest.newBuilder()
             .cacheControl(CacheControl.FORCE_NETWORK)
+        //把原来的 header 拼装到新的 newBuilder request里面
         attachHeaders.forEach { newBuilder.header(it.first, it.second) }
+        //最后添加 sign值
         newBuilder.header("sign", EncryptUtils.encryptMD5ToString(signValue))
-
+        //最后请求要做区分
         if (originRequest.method == "POST" && requestBody != null) {
             newBuilder.post(requestBody)
         } else if (originRequest.method == "GET") {

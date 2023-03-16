@@ -10,6 +10,12 @@ import java.util.*
 
 /**
  * 记录OkHttp网络日志的拦截器
+ * block: (KtHttpLogInterceptor.() -> Unit)? = null
+ * 把一个函数块作为一个参数传入 , 默认值为 null
+ * block 形参
+ * KtHttpLogInterceptor.()-> Unit 这个 KtHttpLogInterceptor 内部所有的函数返回为 空
+ * 在使用的时候 可以直接 KtHttpLogInterceptor{ 函数 函数 } lamba表达式逼格高
+ *
  */
 class KtHttpLogInterceptor(block: (KtHttpLogInterceptor.() -> Unit)? = null) : Interceptor {
 
