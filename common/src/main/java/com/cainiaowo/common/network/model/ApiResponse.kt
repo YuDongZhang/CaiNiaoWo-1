@@ -3,6 +3,7 @@ package com.cainiaowo.common.network.model
 import retrofit2.Response
 
 sealed class ApiResponse<T> {
+    //看伴生类返回东西 , 都是 在下面继承了  ApiResponse
     companion object {
         fun <T> create(response: Response<T>): ApiResponse<T> {
             return if (response.isSuccessful) {

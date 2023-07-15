@@ -37,17 +37,20 @@ fun <T : Any> Call<T>.toLiveData(): LiveData<T?> {
 /**
  * 扩展Retrofit的返回数据,调用await,并catch超时等异常
  * @return DataResult 返回格式为ApiResponse封装
+ * .serveData() 对于call的扩展 , this.await()就是call , service.checkRegister(mobi)本来就可以直接调用 wait
+ *  .serveData() 对于call的扩展得到 DataResult
  */
 suspend fun <T : Any> Call<T>.serveData(): DataResult<T> {
     var result: DataResult<T> = DataResult.Loading
     kotlin.runCatching {
-        this.await()
+        this.await() //请求的过程中会报错 , 所以用 this.await()
     }.onFailure {
         result = DataResult.Error(RuntimeException(it))
         it.printStackTrace()
     }.onSuccess {
         result = DataResult.Success(it)
     }
+    //上面这块的代码可以理解为 this.await() 有成功和失败 , 失败走  DataResult.Error 成功走  result = DataResult.Success(it)
     return result
 }
 

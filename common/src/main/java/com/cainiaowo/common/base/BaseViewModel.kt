@@ -28,6 +28,14 @@ abstract class BaseViewModel : ViewModel() {
         isLoading.value = false
     }.addTo(jobs)
 
+    /*
+    上面这种写法就相当于 这样 , 因为这有一个代码块所以可以这样写
+    fun aa(){
+        viewModelScope.launch {
+
+        }
+    }
+*/
     override fun onCleared() {
         jobs.forEach { it.cancel() }
         super.onCleared()

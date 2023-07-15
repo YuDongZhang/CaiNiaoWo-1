@@ -7,6 +7,7 @@ import com.cainiaowo.login.network.RegisterRsp
 
 /**
  * 登录模块相关的抽象数据接口
+ *
  */
 interface ILoginResource {
 

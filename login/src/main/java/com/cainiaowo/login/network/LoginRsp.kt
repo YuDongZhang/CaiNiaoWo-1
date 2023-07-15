@@ -18,5 +18,7 @@ data class RegisterRsp(
 
 /**
  * 手机号和密码登录 接口响应
+ * 这个是 login  response
+ * 这个地方引入的别名是直接用到数据类的
  */
 typealias LoginRsp = CaiNiaoUserInfo

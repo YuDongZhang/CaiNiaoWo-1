@@ -46,6 +46,8 @@ data class BaseCaiNiaoRsp(
  * 这里表示网络请求成功并得到业务服务器的响应。至于业务成功失败,另一说
  * 将BaseCaiNiaoRsp的对象转化为需要的对象类型,也就是将body.string转为entity
  * @return 返回需要的类型对象,可能为null,如果json解析失败的话
+ *
+ * 这个地方做的就是解密 ,
  */
 inline fun <reified T> BaseCaiNiaoRsp.toEntity(): T? {
     if (data == null) {
@@ -57,6 +59,7 @@ inline fun <reified T> BaseCaiNiaoRsp.toEntity(): T? {
         return CaiNiaoUtils.decodeData(this.data) as T
     }
     return kotlin.runCatching {
+        //具体在这里解析
         GsonUtils.fromJson(CaiNiaoUtils.decodeData(this.data), T::class.java)
     }.onFailure { e ->
         e.printStackTrace()
@@ -81,6 +84,8 @@ inline fun BaseCaiNiaoRsp.onBizError(
 
 /**
  * 接口请求成功,且业务成功code == 1的情况
+ * crossinline 加上之后 在 方法中return 不能返出代码块之外
+ * reified T 这个地方就是具体的类型 , 看调用的地方
  */
 @OptIn(ExperimentalContracts::class)
 inline fun <reified T> BaseCaiNiaoRsp.onBizOK(
@@ -89,6 +94,10 @@ inline fun <reified T> BaseCaiNiaoRsp.onBizOK(
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
+
+    //这个是业务的处理的成功 , 处理成功之后的data ,toEntity<T>()是什么?
+    //com/cainiaowo/login/repo/LoginRepo.kt: onBizOK 传入泛型对应到这里 ,
+    //进入到 toEntity 进行解密
     if (code == BaseCaiNiaoRsp.SERVER_CODE_SUCCESS) {
         action.invoke(code, this.toEntity<T>(), message)
     }
